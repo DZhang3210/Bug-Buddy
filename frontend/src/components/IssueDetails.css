@@ -1,0 +1,63 @@
+.workout-wrapper {
+    display: flex;
+    justify-content: center; /* Centers the child elements horizontally */
+    align-items: stretch; /* Make child elements stretch to the same height */
+}
+
+.workout-details {
+    flex-grow: 1; /* Allows this div to grow and take up available space */
+    transition: transform 0.3s ease-in-out;
+    background-color: white; /* Ensure it has a background color */
+}
+
+.workout-details:hover {
+    cursor: pointer;
+    transform: scale(1.02); /* Slightly scale up the div on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for depth */
+}
+
+.deleteSection {
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+    display: flex; /* Align the delete button in the center */
+    align-items: center; /* Center the delete button vertically */
+    justify-content: center; /* Center the delete button horizontally */
+    margin:20px 0px;
+    padding:30px;
+    background-color: rgb(192, 192, 192); /* Red background on hover */
+}
+
+.deleteSection:hover {
+    background-color: rgb(234, 42, 42); /* Red background on hover */
+}
+
+.material-symbols-outlined {
+    font-size: 1.5em; /* Adjust the size as needed */
+    line-height: 1; /* Adjust line height for proper alignment */
+    display: inline-block; /* Ensures the line-height is applied correctly */
+}
+
+/* Styles for the tags within the workout-details */
+.workout-details div {
+    display: inline-block; /* Makes tag divs inline-blocks so they flow like text */
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    /* Add any additional styling for tags here */
+}
+
+.resolveSection {
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+    display: flex; /* Align the delete button in the center */
+    align-items: center; /* Center the delete button vertically */
+    justify-content: center; /* Center the delete button horizontally */
+    margin:20px 0px;
+    padding:30px;
+    background-color: rgb(192, 192, 192); /* Red background on hover */
+}
+
+.resolveSection:hover {
+    background-color: rgb(74, 74, 74); /* Red background on hover */
+}

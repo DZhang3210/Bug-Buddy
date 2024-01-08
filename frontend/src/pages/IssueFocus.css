@@ -1,0 +1,143 @@
+.focus-wrapper {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 120px;
+}
+
+.focus {
+    background-color: #fff;
+    padding: 40px; /* Increased padding for better spacing */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-title {
+    font-size: 2.2em; /* Slightly larger title */
+    color: #333;
+    margin-bottom: 30px; /* Increased margin for separation */
+}
+
+.article-detail {
+    font-size: 1.1em; /* Slightly larger font size for details */
+    margin-bottom: 15px; /* Increased margin for better readability */
+    line-height: 1.7; /* Adjusted line height */
+    color: #444;
+}
+
+.article-detail strong {
+    font-weight: bold;
+}
+
+/* Additional Styling for Responsiveness */
+@media screen and (max-width: 768px) {
+    .workouts {
+        width: 90%;
+        padding: 20px; /* Reduced padding for smaller screens */
+    }
+}
+
+.commentSection {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.commentPrompt {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.commentInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't increase the width */
+    margin-bottom: 10px;
+}
+
+.commentInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* ...existing styles... */
+
+.commentButton {
+    background-color: rgba(13, 182, 29, 0.5);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.commentButton:hover {
+    background-color: rgba(7, 147, 21, 0.5);
+}
+
+.commentButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 237, 51, 0.5);
+}
+
+/* Adjust the layout to put the input and button on the same line, if desired */
+.commentSection {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.inputButtonContainer {
+    display: flex; /* Apply Flexbox */
+    align-items: center; /* Vertically align elements in the container */
+}
+
+.commentInput {
+    flex-grow: 1; 
+    margin-right: 10px; 
+}
+
+
+.commentPrompt {
+    /* ...existing styles... */
+    margin-bottom: 10px; /* Ensure there's some space between the prompt and the input/button container */
+}
+.commentsContainer {
+    margin-top: 20px;
+    border-top: 1px solid #ececec;
+    padding-top: 20px;
+}
+
+.singleComment {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.commentAuthor {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.commentText {
+    margin: 0;
+    line-height: 1.4;
+    color: #555555;
+}
+
