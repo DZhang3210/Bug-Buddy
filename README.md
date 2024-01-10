@@ -1,0 +1,1 @@
+The MERN Bug Tracker is a comprehensive issue management system designed specifically for software development teams utilizing the MERN stack (MongoDB, Express.js, React, and Node.js). This tool provides an intuitive platform for tracking, organizing, and resolving software bugs, enhancing collaboration and efficiency within development projects.
