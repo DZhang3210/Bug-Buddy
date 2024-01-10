@@ -11,6 +11,9 @@ const IssueFocus = () => {
     const [CurrComments, setCurComments] = useState([])
     const [render, setRender] = useState(false)
     const [error, setError] = useState(null)
+    const [edit, setEdit] = useState(false)
+    const [title, setTitle] = useState('')
+    const [par, setPar] = useState('')
     const {user} = useAuthContext()
     const {currentIssue} = useIssuesContext()
 
@@ -23,7 +26,11 @@ const IssueFocus = () => {
         })
         const json = await response.json()
         if (response.ok) {
-            setDetails(json)
+            await setDetails(json)
+            setTitle(json.title)
+            setPar(json.description)
+            console.log('USER', user, 'DETAILS',details)
+            console.log('OK', title, par)
         }}
         const fetchComments = async () => {
             const response = await fetch('/api/comment/'+currentIssue,{
@@ -71,14 +78,65 @@ const IssueFocus = () => {
         }
     } 
 
+    const onSubmit = async() =>{
+        if(edit){
+        if(!user){return}
+
+        const response = await fetch('/api/issue/' + currentIssue,{
+            method: 'PATCH', 
+            body: JSON.stringify({title, description:par}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bear ${user.token}`
+            }
+        })
+
+        const json = await response.json()
+        if (response.ok){
+            setRender((render) => !render)
+            console.log("NEW SUBMIT",json)
+        }
+
+        }
+        setEdit(!edit)
+    }
+
+    //console.log('CONSOLE',details)
+    //const issueStyle = (details.tags.includes('resolved') ? { backgroundColor: '#d5deeb'} : {backgroundColor: 'white'})
+
     return (  
         <div className="focus-wrapper">
             <div className="focus">
-                <h1 className="article-title">{details.title}</h1>
-                {details.createdAt && <div className="article-detail">{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</div>}
-                <div className="article-detail">{details.author_name}</div>
-                <div className="article-detail">{details.description}</div>
+                <div className="top-section">
+                    {!edit && <span className="article-title">{details.title}</span>}
+                    {edit && (
+                        <div className="edit-input-container">
+                            <input
+                                type="text"
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="title"
+                                value={title}
+                            />
+                            <div className="edit" onClick={() => onSubmit()}>{!edit ? 'Edit' : 'Submit'}</div>
+                        </div>
+                    )}
+                    {(details && details.tags.includes('resolved')) ? <div className="tag">Resolved</div> : 
+                        (details.author_id === user.id && !edit && <div className="edit" onClick={() => setEdit(true)}>Edit</div>)
+                    }
+                    <div className="article-extra">
+                        Opened <strong>{details.createdAt && <span className="article-detail">{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</span>}</strong> <span className="article-detail">By {details.author_name}</span>
+                    </div>
+                </div>
+
+                {!edit ? <div className="article-detail">{details.description}</div> : 
+                    <input
+                        type = "text"
+                        value = {par}
+                        onChange = {(e) => setPar(e.target.value)}
+                        placeholder = "description"
+                    ></input>}
             </div>
+            {(!edit && details) && (details.tags.includes('resolved')? <div className = "commentSection">Comment Section is Locked</div> :
             <div className="commentSection">
                 <form onSubmit={handleSubmit}>
                     <div className="commentPrompt">Comment Something</div>
@@ -94,15 +152,13 @@ const IssueFocus = () => {
                     </div>
                     {error && <div className = "error">{error}</div>}
                 </form>
-            </div>
+            </div>)}
             <div className="commentsContainer">
                 {CurrComments.map((cover) => (
                     <div className="singleComment" key={cover._id}>
-                        <p className="commentAuthor">Author: {cover.author_name}</p>
-                        <p className="commentText">{cover.comment}</p>
-                        {/* Additional details like date, reply button etc. can be added here */}
+                        <p className="commentAuthor">{cover.author_name}: <span className="commentText">{cover.comment}</span></p>
                     </div>
-                ))}
+                ))} 
             </div>
         </div>
     

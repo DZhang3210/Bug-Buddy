@@ -23,7 +23,7 @@ header {
 
 .container .brand-logo h1 {
     margin: 0;
-    font-size: 1.6em;
+    font-size: 1.8em;
 }
 
 .container .brand-logo:hover {
@@ -38,21 +38,6 @@ header {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.nav-link {
-    color: #555;
-    text-decoration: none;
-    margin-right: 20px;
-    transition: color 0.3s, transform 0.3s;
-    padding: 5px 8px; /* Added padding for a better touch area */
-    border-radius: 4px; /* Rounded corners */
-}
-
-.nav-link:hover {
-    color: #333;
-    background-color: #f0f0f0; /* A light background on hover */
-    transform: translateY(-2px); /* Slight lift effect */
-}
-
 .user-controls {
     margin-left: auto;
     display: flex;
@@ -65,17 +50,47 @@ header {
 }
 
 .logout-btn {
-    background-color: #d3d3d3;
-    color: #333;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-    border-radius: 4px; /* Rounded corners */
+    background-color: #f67975; /* Red color for attention */
+    color: white; /* White text for contrast */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding for button size */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Suitable font size */
+    cursor: pointer; /* Cursor changes to pointer to indicate it's clickable */
+    display: flex; /* For aligning icon and text */
+    align-items: center; /* Align items in the center vertically */
+    justify-content: center; /* Center content horizontally */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 .logout-btn:hover {
-    background-color: #c0c0c0;
-    color: #000;
-    transform: translateY(-2px); /* Slight lift effect */
+    background-color: #c9302c; /* Darker shade on hover for feedback */
 }
+
+.logout-btn .ci-logout { /* Adjust class based on how you're importing CiLogout */
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.nav-link {
+    color: #0755fd; /* Blue color for links */
+    text-decoration: none; /* Removes underline from links */
+    padding: 8px 12px; /* Padding for a larger clickable area */
+    font-size: 16px; /* Suitable font size for navigation */
+    border-radius: 4px; /* Rounded corners for a button-like appearance */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+    display: flex; /* Flex layout to align icon and text */
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Center content horizontally */
+    margin-right: 10px; /* Margin to separate links */
+}
+
+.nav-link:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    color: white; /* White text on hover for contrast */
+    text-decoration: none; /* Ensures underline doesn't reappear on hover */
+}
+
+.nav-link .ci-login { /* Adjust class based on how you're importing CiLogin */
+    margin-right: 5px; /* Space between icon and text */
+}
+

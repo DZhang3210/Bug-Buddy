@@ -4,23 +4,14 @@ import {useIssuesContext} from '../hooks/useIssuesContext'
 import { useAuthContext } from '../hooks/useAuthContext' 
 import { FaStar, FaList, FaCheck } from 'react-icons/fa';
 
-const Home = () => {
 
-    //const [workouts, setWorkouts] = useState(null)
-    // useEffect(()=> {
-    //     const fetchWorkouts = async () =>{
-    //         const response = await fetch('/api/workouts')
-    //         const json = await response.json()
-            
-    //         if(response.ok) setWorkouts(json)
-    //     }
-    //     fetchWorkouts()
-    // }, [])
+const Home = () => {
     
     const { issues, dispatch } = useIssuesContext()
     const {user} = useAuthContext()
-
     useEffect(() => {
+        
+        console.log('User: ', user)
         const fetchIssues = async () => {
         const response = await fetch('/api/issue/general/'+user.teamID,{
             headers: {
@@ -39,18 +30,21 @@ const Home = () => {
     }, [dispatch, user])
 
     return(
-        <div className = "home">
-            {/* <div><FaStar/>Starred</div>
-            <div><FaList/>All</div>
-            <div><FaCheck/>Resolved</div> */}
-            <div className = "workouts">
-                {issues && issues.map(
-                    (issue) => (
-                        <IssueDetails key = {issue._id} issue = {issue}/>
-                    )
-                )}
+        <div className="listed-issues">
+            <div>
+                <FaList className="fa-list" /> Current Issues
+            </div> 
+            <div className="home">
+                <div className="workouts">
+                    {issues && issues.map(
+                        (issue) => (
+                            <IssueDetails key={issue._id} issue={issue}/>
+                        )
+                    )}
+                </div>
             </div>
         </div>
+
     )
 }
 export default Home

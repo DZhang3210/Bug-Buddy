@@ -35,8 +35,11 @@ const Login = () => {
             />
             <button>Log in</button>
             {error && <div className = "error">{error}</div>}
+            <div className = "instructions">
+                <div>Test Email: dummy@gmail.com</div>
+                <div>Test Password: Password1!</div>
+            </div>
         </form>
-        
     );
 }
  

@@ -15,7 +15,6 @@ const IssueDetails = ({issue}) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("ReRender")
         const fetchIssues = async () => {
         const response = await fetch('/api/issue/'+issue._id,{
             headers: {
@@ -26,12 +25,20 @@ const IssueDetails = ({issue}) => {
             setDetails(json)
         }}
         if(user){
-            fetchIssues().then(
-                console.log('DETAILS',details)
-            )
+            fetchIssues()
         }
     }, [user, render])
 
+
+    const OnResolve = async () => {
+        const response = await fetch('/api/issue/general/'+user.teamID,{
+            headers: {
+                'Authorization': `Bear ${user.token}`
+            }})
+        const json = await response.json()
+        if (response.ok) {
+            dispatch({type: 'SET_ISSUES', payload: json})
+        }}
 
     const handleClick = async() =>{
         if(!user){return}
@@ -60,6 +67,7 @@ const IssueDetails = ({issue}) => {
         const json = await response.json()
         if (response.ok){
             setRender((render) => !render)
+            OnResolve()
         }
     }
 
@@ -71,33 +79,38 @@ const IssueDetails = ({issue}) => {
     }}
 
     
-
+    const issueStyle = issue.tags.includes('resolved') ? { backgroundColor: '#d5deeb'} : {backgroundColor: 'white'}
     return ( 
-        details && <div className = "workout-wrapper">
-            <div className = "workout-details" onClick = {onClick(issue._id)}>
+        details && <div className="workout-wrapper" style={issueStyle}>
+        <div className="workout-details" onClick={onClick(issue._id)}>
+            <div>
                 <h4>{details.title}</h4>
-                <p><strong>Author: </strong> {details.author_name}</p>
-                <p>{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</p>
-                <p>{details.description}</p>
-                <div>
-                    {details.tags.map((tag, index)=>(
-                        <div key = {index}>
-                            {tag}
+                {details.tags.map((tag, index) => (
+                    <div key={index}>
+                        {tag}
+                    </div>
+                ))}
+            </div>
+            <div className = "issueDetails">
+                <span>
+                    Opened <strong>{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</strong> by {details.author_name}
+                </span>
+            </div>
+            </div>
+            <div className="buttons">
+                {details.author_id === user.id &&
+                    <>
+                        <div className="deleteSection" onClick={handleClick}>
+                            <div className="material-symbols-outlined">Delete</div>
                         </div>
-                    ))}
-                </div>
+                        <div className="resolveSection" onClick={resolveIssue}>
+                            <div className="material-symbols-outlined">Block</div>
+                        </div>
+                    </>
+                }
             </div>
-            {details.author_id === user.id &&
-            <div className = "deleteSection" onClick = {handleClick}>
-                <div className = "material-symbols-outlined" >Delete</div>
-            </div>
-            }
-            {details.author_id === user.id &&
-            <div className = "resolveSection" onClick = {resolveIssue}>
-                <div className = "material-symbols-outlined">Block</div>
-            </div>
-            }
         </div>
+    
      );
 }
  

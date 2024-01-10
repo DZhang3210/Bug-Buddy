@@ -1,63 +1,72 @@
 .workout-wrapper {
-    display: flex;
-    justify-content: center; /* Centers the child elements horizontally */
-    align-items: stretch; /* Make child elements stretch to the same height */
+    border: 1px solid #e1e4e8; /* Light grey border */
+    border-radius: 6px; /* Rounded corners */
+    padding: 16px; /* Spacing inside the card */
+    margin: 10px 0; /* Space between cards */
+    background-color: #fff; /* White background */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow */
+    transition: box-shadow 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.workout-wrapper:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* Slightly larger shadow on hover */
 }
 
 .workout-details {
-    flex-grow: 1; /* Allows this div to grow and take up available space */
-    transition: transform 0.3s ease-in-out;
-    background-color: white; /* Ensure it has a background color */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
-.workout-details:hover {
+.workout-details h4 {
+    margin-top: 0; /* No top margin for the title */
+    color: #0366d6; /* GitHub's link color for the title */
+    font-size: 16px; /* Font size for the title */
+    margin-bottom:0
+}
+
+.workout-details p {
+    color: #586069; /* Subdued text color */
+    margin: 8px 0; /* Margin for paragraphs */
+    font-size: 14px; /* Font size for paragraphs */
+}
+
+.workout-details div {
+    padding: 2px 6px; /* Padding inside tags */
+    margin-right: 4px; /* Margin between tags */
+    border-radius: 2px; /* Rounded corners for tags */
+    font-size: 12px; /* Smaller font size for tags */
+    color: #5c5c5c; /* Match the title color for tags */
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end; /* Buttons aligned to the right */
+}
+
+.deleteSection, .resolveSection {
     cursor: pointer;
-    transform: scale(1.02); /* Slightly scale up the div on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for depth */
-}
-
-.deleteSection {
-    transition: background-color 0.3s ease-in-out;
-    cursor: pointer;
-    display: flex; /* Align the delete button in the center */
-    align-items: center; /* Center the delete button vertically */
-    justify-content: center; /* Center the delete button horizontally */
-    margin:20px 0px;
-    padding:30px;
-    background-color: rgb(192, 192, 192); /* Red background on hover */
-}
-
-.deleteSection:hover {
-    background-color: rgb(234, 42, 42); /* Red background on hover */
+    color: #0366d6;
 }
 
 .material-symbols-outlined {
-    font-size: 1.5em; /* Adjust the size as needed */
-    line-height: 1; /* Adjust line height for proper alignment */
-    display: inline-block; /* Ensures the line-height is applied correctly */
+    font-size:1.1rem;
+    color:rgb(112, 112, 112);
 }
 
-/* Styles for the tags within the workout-details */
-.workout-details div {
-    display: inline-block; /* Makes tag divs inline-blocks so they flow like text */
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    /* Add any additional styling for tags here */
-}
-
-.resolveSection {
-    transition: background-color 0.3s ease-in-out;
+.deleteSection, .resolveSection {
     cursor: pointer;
-    display: flex; /* Align the delete button in the center */
-    align-items: center; /* Center the delete button vertically */
-    justify-content: center; /* Center the delete button horizontally */
-    margin:20px 0px;
-    padding:30px;
-    background-color: rgb(192, 192, 192); /* Red background on hover */
+    color: #0366d6;
+    margin-left: 8px; /* Space between buttons */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition for hover effects */
 }
 
+/* Hover effect for deleteSection */
+.deleteSection:hover {
+    background-color: #ffeded; /* Light red background on hover */
+    color: #d73a49; /* Darker red text color on hover */
+}
+
+/* Hover effect for resolveSection */
 .resolveSection:hover {
-    background-color: rgb(74, 74, 74); /* Red background on hover */
+    background-color: #e6f3ff; /* Light blue background on hover */
+    color: #0366d6; /* Darker blue text color on hover */
 }

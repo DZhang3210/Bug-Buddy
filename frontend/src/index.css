@@ -34,38 +34,9 @@ header a {
 
 /* homepage */
 .home {
-  padding-top:100px;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 100px;
-}
-.workout-details {
-  background: #fff;
-  border-radius: 4px;
-  margin: 20px auto;
-  padding: 20px;
-  position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-}
-.workout-details h4 {
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
-  color: var(--primary);
-}
-.workout-details p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #555;
-}
-.workout-details span {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  cursor: pointer;
-  background: #f1f1f1;
-  padding: 6px;
-  border-radius: 50%;
-  color: #333;
+  gap: 10px;
 }
 
 /* new workout form */
@@ -132,5 +103,50 @@ form.signup, form.login {
   margin-top:150px;
 }
 .create{
-  padding-top:120px
+  padding-top:120px;
 }
+
+.listed-issues {
+  display: flex;
+  flex-direction: column; /* Stacks children elements in a column */
+  width: 100%; /* Adjust width as needed */
+  padding-top:120px;
+}
+
+.home, .workouts {
+  width: 100%; /* Ensure full width for internal divs */
+  /* Additional styles (padding, margins, etc.) can be added here */
+}
+
+/* Optional: Style individual sections for better visibility and layout */
+.listed-issues > div {
+  margin-bottom: 20px; /* Space out each section */
+}
+
+
+.listed-issues > div:first-child {
+  display: flex; /* Use Flexbox */
+  align-items: center; /* Align items vertically in the center */
+  font-size: 1.2rem; /* Larger text for the header */
+  font-weight: bold; /* Bold text for the header */
+  margin-bottom: 20px; /* Spacing below the header */
+  color: #333; /* Dark color for the header */
+}
+
+.listed-issues .fa-list { /* Adjust based on your actual class name for FaList */
+  margin-right: 10px; /* Space between icon and text */
+  font-size: 0.8em; /* Adjust the size of the icon if necessary */
+  color: #4a90e2; /* Color for the icon */
+}
+
+.instructions {
+  margin-top: 20px; /* Space above the instructions */
+  padding: 10px; /* Padding inside the instructions box */
+  background-color: #f8f8f8; /* Light background color for emphasis */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 5px; /* Rounded corners */
+  color: #333; /* Dark color for text */
+  font-size: 14px; /* Appropriate font size */
+  line-height: 1.5; /* Space between lines */
+}
+

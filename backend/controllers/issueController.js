@@ -6,6 +6,20 @@ const getIssues = async(req, res) => {
     //const user_id = req.params.id;
     
     const issues = await Issue.find({teamID}).sort({createdAt: -1})
+    issues.sort((a, b) => {
+        const aIsResolved = a.tags.includes("resolved");
+        const bIsResolved = b.tags.includes("resolved");
+    
+        if (aIsResolved && !bIsResolved) {
+            return 1; // a goes to the bottom
+        } else if (!aIsResolved && bIsResolved) {
+            return -1; // b goes to the bottom
+        } else {
+            // If both are resolved or both are non-resolved, sort by createdAt
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        }
+    });
+    
     res.status(200).json(issues)
 }
 
@@ -64,7 +78,7 @@ const deleteIssue = async (req, res) => {
 
 const updateIssue = async(req, res) => {
     const{ id } = req.params
-    const {action} = req.body
+    const {action, title, description} = req.body
     const currState = await Issue.findOne({_id: id}).select('tags')
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: "No such Issue"})
@@ -92,6 +106,14 @@ const updateIssue = async(req, res) => {
                 }
                 res.status(200).json(updatedIssue);
             }
+        }else{
+            const updatedIssue = await Issue.findOneAndUpdate(
+                {_id: id}, {title, description}, {new:true}
+            );
+            if (!updatedIssue) {
+                return res.status(404).json({ error: "Issue not found" });
+            }
+            res.status(200).json(updatedIssue);
         }
         // Handle other actions here if necessary
     } catch (error) {

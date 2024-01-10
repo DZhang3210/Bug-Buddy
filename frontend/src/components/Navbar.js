@@ -1,6 +1,9 @@
 import {Link} from 'react-router-dom'
 import {useLogout} from '../hooks/useLogout'
 import {useAuthContext} from '../hooks/useAuthContext'
+import {CiLogin, CiLogout, FaSignInAlt} from "react-icons/ci";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBug } from '@fortawesome/free-solid-svg-icons'
 import './navbar.css'
 
 const Navbar = () => {
@@ -15,7 +18,7 @@ const Navbar = () => {
     <header>
         <div className="container">
             <Link to="/" className="brand-logo">
-                <h1>Bug Buddy</h1>
+                <h1><FontAwesomeIcon icon={faBug} /> Bug Buddy</h1>
             </Link>
         </div>
         <nav className="navbar">
@@ -25,13 +28,16 @@ const Navbar = () => {
                 {user &&
                     <>
                         <span className="user-email">{user.email}</span>
-                        <button onClick={handleClick} className="logout-btn">Log Out</button>
+                        <button onClick={handleClick} className="logout-btn">
+                            <CiLogout className="ci-logout" />Log Out
+                        </button>
+
                     </>
                 }
                 {!user &&
                     <>
-                        <Link to="/login" className="nav-link">Login</Link>
-                        <Link to="/signup" className="nav-link">Signup</Link>
+                        <Link to="/login" className="nav-link"><CiLogin/>Login</Link>
+                        <Link to="/signup" className="nav-link"> <CiLogin/>Signup</Link>
                     </>
                 }
             </div>
