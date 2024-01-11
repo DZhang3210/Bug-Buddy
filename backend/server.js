@@ -9,8 +9,13 @@ const commentRoutes = require('./routes/comment')
 const resolvedIssuesRoutes = require('./routes/rIssues')
 
 //express app
+const corsOptions = {
+    origin: "http://localhost:3000" // frontend URI (ReactJS)
+}
 const app = express();
-app.use(express.json());    //parses JSON
+const cors = require('cors')
+app.use(express.json());
+app.use(cors(corsOptions))
 
 //Routes
 app.use('/api/comment', commentRoutes)
@@ -26,7 +31,7 @@ app.use('/api/user', signupRoutes)
 mongoose.connect(process.env.MONGO_URI)
 .then(
     //Start up express app
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT || 4000, () => {
         console.log('connected to db & listening on port '+ process.env.PORT)
     })
 )

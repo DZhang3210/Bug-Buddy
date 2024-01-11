@@ -9,7 +9,7 @@
     const signup = async (email, password, FName, LName, conPassword, teamID) =>{
         setIsLoading(true)
         setError(null)
-        const response = await fetch('/api/user/signup', {
+        const response = await fetch('http://localhost:4000/api/user/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password, firstName: FName, lastName: LName, conPassword, teamID})

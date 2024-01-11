@@ -14,7 +14,7 @@ const Home = () => {
     useEffect(() => {
         //console.log('User: ', user)
         const fetchIssues = async () => {
-        const response = await fetch('/api/issue/general/'+user.teamID+"/"+filter+"/"+user.id+"/"+keyword,{
+        const response = await fetch('http://localhost:4000/api/issue/general/'+user.teamID+"/"+filter+"/"+user.id+"/"+keyword,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }

@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import {useAuthContext} from './hooks/useAuthContext'
 
+
 // Pages and Components
 import Home from './pages/Home'
 import Navbar from './components/Navbar'

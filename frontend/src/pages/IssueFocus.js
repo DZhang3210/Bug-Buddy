@@ -23,7 +23,7 @@ const IssueFocus = () => {
 
     useEffect(() => {
         const fetchIssue = async () => {
-        const response = await fetch('/api/issue/'+currentIssue,{
+        const response = await fetch('http://localhost:4000/api/issue/'+currentIssue,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }
@@ -38,7 +38,7 @@ const IssueFocus = () => {
                 console.log('USER', user, 'DETAILS',details)
         }}
         const fetchComments = async () => {
-            const response = await fetch('/api/comment/'+currentIssue,{
+            const response = await fetch('http://localhost:4000/api/comment/'+currentIssue,{
                 headers: {
                     'Authorization': `Bear ${user.token}`
                 }
@@ -63,7 +63,7 @@ const IssueFocus = () => {
         }
             const sent = {author_id:user.id, author_name: user.firstName, issue_id: currentIssue, comment}
 
-            const response = await fetch('/api/comment/', {
+            const response = await fetch('http://localhost:4000/api/comment/', {
             method: 'POST',
             body: JSON.stringify(sent),
             headers: {
@@ -87,7 +87,7 @@ const IssueFocus = () => {
         if(edit){
         if(!user){return}
 
-        const response = await fetch('/api/issue/' + currentIssue,{
+        const response = await fetch('http://localhost:4000/api/issue/' + currentIssue,{
             method: 'PATCH', 
             body: JSON.stringify({action:"edit",title, description:par}),
             headers: {
@@ -107,7 +107,7 @@ const IssueFocus = () => {
     }
     const changeViews = async () =>{
         if(!user){return}
-        const response1 = await fetch('/api/issue/' + currentIssue,{
+        const response1 = await fetch('http://localhost:4000/api/issue/' + currentIssue,{
             method: 'PATCH', 
             body: JSON.stringify({action:"views", user:user.id}),
             headers: {
