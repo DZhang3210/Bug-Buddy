@@ -27,7 +27,7 @@ const IssueForm = () => {
     }
     //console.log(issue)
 
-    const response = await fetch('http://localhost:4000/api/issue/', {
+    const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/', {
       method: 'POST',
       body: JSON.stringify(issue),
       headers: {
