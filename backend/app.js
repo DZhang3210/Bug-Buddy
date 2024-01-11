@@ -10,7 +10,7 @@ const resolvedIssuesRoutes = require('./routes/rIssues')
 
 //express app
 const corsOptions = {
-    origin: "http://localhost:3000" // frontend URI (ReactJS)
+    origin: "https://bug-frontend-hnc8.onrender.com" // frontend URI (ReactJS)
 }
 const app = express();
 const cors = require('cors')
