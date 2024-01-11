@@ -142,5 +142,10 @@
     background-color: #e0e0e0; /* Slightly darker on hover */
 }
 
+.container{
+    display:flex;
+    gap:10px;
+    margin-left:0px;
+}
 
 

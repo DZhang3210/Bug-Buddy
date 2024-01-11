@@ -20,7 +20,7 @@ const IssueDetails = ({issue, filter, keyword}) => {
     
     useEffect(() => {
         const fetchIssues = async () => {
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/'+issue._id,{
+        const response = await fetch('http://localhost:4000/api/issue/'+issue._id,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }})
@@ -35,7 +35,7 @@ const IssueDetails = ({issue, filter, keyword}) => {
 
 
     const OnResolve = async () => {
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/general/'+user.teamID+"/"+filter + '/'+user.id+"/"+keyword,{
+        const response = await fetch('http://localhost:4000/api/issue/general/'+user.teamID+"/"+filter + '/'+user.id+"/"+keyword,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }})
@@ -46,7 +46,7 @@ const IssueDetails = ({issue, filter, keyword}) => {
 
     const handleClick = async() =>{
         if(!user){return}
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/' + issue._id,{
+        const response = await fetch('http://localhost:4000/api/issue/' + issue._id,{
             method: 'DELETE', 
             headers: {
                 'Authorization': `Bear ${user.token}`
@@ -60,7 +60,7 @@ const IssueDetails = ({issue, filter, keyword}) => {
     }
     const resolveIssue = async() =>{
         if(!user){return}
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/' + issue._id,{
+        const response = await fetch('http://localhost:4000/api/issue/' + issue._id,{
             method: 'PATCH', 
             body: JSON.stringify({action: "resolve"}),
             headers: {
@@ -90,9 +90,12 @@ const IssueDetails = ({issue, filter, keyword}) => {
         details && <div className="workout-wrapper" style={issueStyle}>
         <div className="workout-details" onClick={onClick(issue._id)}>
             <div>
-                <h4>{details.title} 
-                    {issue.watchViews.includes(user.id) && <FontAwesomeIcon icon={faEye}/>}
-                    {details.tags && details.tags.includes('resolved') && <FontAwesomeIcon icon={faCheck}/>}
+                <h4>
+                {details.title}
+                <div className = "container">
+                    {issue.watchViews.includes(user.id) &&<div>Watching <FontAwesomeIcon icon={faEye}/></div>}
+                    {details.tags && details.tags.includes('resolved') && <div>Resolved <FontAwesomeIcon icon={faCheck}/></div>}
+                </div>
                 </h4>
                 
             </div>

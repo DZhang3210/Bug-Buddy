@@ -15,6 +15,7 @@
 
 .top-section {
     border-bottom: 1px solid #e1e4e8;
+    padding:20px;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
@@ -60,6 +61,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    font-size:0.4em;
 }
 
 .commentButton:hover {
@@ -67,22 +69,30 @@
 }
 
 .singleComment {
-    border-top: 1px solid #e1e4e8;
-    padding-top: 10px;
-    margin-top: 10px;
+    padding-top:10px;
+    border-left: 1px solid #898989; /* Subtle border */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    padding-left: 10px; /* Padding inside the comment box */
+    margin-left:10px;
 }
 
 .commentAuthor {
-    color: #0077cc;
-    font-weight: bold;
+    font-family:'Roboto', sans-serif;
+    font-weight: bold; /* Bold for the author name */
+    color: #1381f6; /* Slightly darker color for the author */
+    font-size: 0.6em; /* Slightly larger font size for author */
+    padding-bottom:20px;
 }
 
 .commentText {
-    color: #242729;
+    color: #555; /* Dark grey color for readability */
+    font-size: 0.8em; /* Regular font size for comment text */
+    margin:0;
 }
 
+
 /* New styles for emphasizing onClick components */
-.edit, .commentButton, .showcase, .git {
+.active, .edit, .commentButton, .showcase, .git {
     cursor: pointer; 
     transition: all 0.2s ease-in-out; 
 }
@@ -91,7 +101,7 @@
     color: #1158c7; 
     font-weight: bold; 
     background-color: #f3f3f3; 
-    transform: scale(1.05); 
+    transform: scale(1.01); 
 }
 
 .commentButton {
@@ -106,8 +116,114 @@
     transition: transform 0.2s ease; 
 }
 
+.edit{
+    display: inline-block;
+    color: black;
+    padding: 4px 10px;
+    border-radius: 3px;
+    border:1px black solid;
+    font-size: 0.9em;
+}
+.active {
+    display: inline-block;
+    background-color: #ffeb3b;
+    color: black;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border:1px black solid;
+    font-size: 0.9em;
+}
+
 .active .faEye:hover, .edit .faEye:hover {
     transform: scale(1.1); 
     color: #f48024;
 }
+
+.active:hover, .edit:hover{
+    transform: scale(1.01); 
+    color: #f48024;
+}
+
+.article-dash{
+    padding:15px 0;
+    display:flex;
+    gap: 10px;
+}
+
+.description{
+    border-left: 1px black solid;
+    border-radius:5px;
+    padding: 20px;
+}
+
+.commentPrompt {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text color for contrast */
+    border: 1px solid #f5c6cb; /* Slightly lighter red border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for spacing */
+    margin: 10px 0; /* Margin for spacing from other elements */
+    display: flex; /* Flexbox for aligning items */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center content horizontally */
+    font-weight: bold; /* Bold font for emphasis */
+    text-align: center; /* Center text alignment */
+}
+
+.commentPrompt span {
+    margin-right: 5px; /* Spacing between the issue resolved text and the rest */
+}
+
+.faLock {
+    margin-left: 5px; /* Space between text and lock icon */
+}
+
+.commentTitle {
+    background-color: #f8f0eb; /* Light red background */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for spacing */
+    margin: 10px 0; /* Margin for spacing from other elements */
+    display: flex; /* Flexbox for aligning items */
+    font-weight: bold; /* Bold font for emphasis */
+    text-align: center; /* Center text alignment */
+}
+
+.commentTitle span {
+    margin-right: 5px; /* Spacing between the issue resolved text and the rest */
+}
+
+.inputButtonContainer{
+    display:flex;
+    padding: 0px 20px;
+    max-height:80px;
+}
+
+.edit-input-container {
+    display: flex; /* Use flexbox to layout children in a row */
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Add some space between the items */
+}
+
+.edit-input-container label {
+    margin-right: 5px; /* Optional: Add some space right of the label */
+    white-space: nowrap; /* Keep the label text on one line */
+}
+
+.description-input {
+    display: flex; /* Use flexbox to layout children in a row */
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Add some space between the items */
+}
+
+.description-input label {
+    margin-right: 5px; /* Optional: Add some space right of the label */
+    white-space: nowrap; /* Keep the label text on one line */
+}
+
+.description-input input {
+    flex-grow: 1; /* Allow input to take up the remaining space */
+    margin-right: 10px; /* Add space between input and any following elements */
+}
+
+
 

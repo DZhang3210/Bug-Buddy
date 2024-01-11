@@ -6,7 +6,7 @@ import './IssueFocus.css'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faLock} from '@fortawesome/free-solid-svg-icons'
 
 const IssueFocus = () => {
     const [details, setDetails] = useState('')
@@ -23,7 +23,7 @@ const IssueFocus = () => {
 
     useEffect(() => {
         const fetchIssue = async () => {
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/'+currentIssue,{
+        const response = await fetch('http://localhost:4000/api/issue/'+currentIssue,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }
@@ -38,7 +38,7 @@ const IssueFocus = () => {
                 console.log('USER', user, 'DETAILS',details)
         }}
         const fetchComments = async () => {
-            const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/comment/'+currentIssue,{
+            const response = await fetch('http://localhost:4000/api/comment/'+currentIssue,{
                 headers: {
                     'Authorization': `Bear ${user.token}`
                 }
@@ -63,7 +63,7 @@ const IssueFocus = () => {
         }
             const sent = {author_id:user.id, author_name: user.firstName, issue_id: currentIssue, comment}
 
-            const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/comment/', {
+            const response = await fetch('http://localhost:4000/api/comment/', {
             method: 'POST',
             body: JSON.stringify(sent),
             headers: {
@@ -87,7 +87,7 @@ const IssueFocus = () => {
         if(edit){
         if(!user){return}
 
-        const response = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/' + currentIssue,{
+        const response = await fetch('http://localhost:4000/api/issue/' + currentIssue,{
             method: 'PATCH', 
             body: JSON.stringify({action:"edit",title, description:par}),
             headers: {
@@ -107,7 +107,7 @@ const IssueFocus = () => {
     }
     const changeViews = async () =>{
         if(!user){return}
-        const response1 = await fetch('https://bug-tracker-w9lv.onrender.com/api/issue/' + currentIssue,{
+        const response1 = await fetch('http://localhost:4000/api/issue/' + currentIssue,{
             method: 'PATCH', 
             body: JSON.stringify({action:"views", user:user.id}),
             headers: {
@@ -128,41 +128,54 @@ const IssueFocus = () => {
             <div className="focus">
                 <div className="top-section">
                     {!edit && <span className="article-title">{details.title}</span>}
-                    {!edit && 
-                        <span className = {details && details.watchViews.includes(user.id) ?"active":"edit"} onClick = {()=>changeViews()}>
-                            <FontAwesomeIcon icon={faEye}Watching/> Watch ({watching})
-                        </span>}
-                    {edit && (
-                        <div className="edit-input-container">
-                            <input
-                                type="text"
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder="title"
-                                value={title}
-                            />
-                            <div className="edit" onClick={() => onSubmit()}>{!edit ? 'Edit' : 'Submit'}</div>
-                        </div>
-                    )}
-                    {(details && details.tags.includes('resolved')) ? <div className="tag">Resolved</div> : 
-                        (details.author_id === user.id && !edit && <div className="edit" onClick={() => setEdit(true)}>Edit</div>)
-                    }
-                    <div className="article-extra">
-                        Opened <strong>{details.createdAt && <span className="article-detail">{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</span>}</strong> <span className="article-detail">By {details.author_name}</span>
+                    <div className = "article-dash">
+                        {!edit && 
+                            <span className = 
+                                {details && details.watchViews.includes(user.id) ?"active":"edit"} 
+                                onClick = {()=>changeViews()}>
+                                {details && details.watchViews.includes(user.id) && <FontAwesomeIcon icon={faEye}Watching/> }
+                                {details && details.watchViews.includes(user.id) ? 'Watching' : 'Watch'} ({watching})
+                            </span>}
+                        {edit && (
+                            <div className="edit-input-container">
+                                <label>Title: </label><input
+                                    type="text"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder="title"
+                                    value={title}
+                                />
+                                <div className="edit" onClick={() => onSubmit()}>{!edit ? 'Edit' : 'Submit'}</div>
+                            </div>
+                        )}
+
+                        {(details && details.tags.includes('resolved')) ? <div className="tag">Resolved</div> : 
+                            (details.author_id === user.id && !edit && <div className="edit" onClick={() => setEdit(true)}>Edit</div>)
+                        }
                     </div>
+                    <div className="article-extra">
+                        Opened {details.createdAt && <span className="article-detail"><strong>{formatDistanceToNow(new Date(details.createdAt), {addSuffix: true})}</strong> by {details.author_name}</span>}
+                    </div>
+                    
                 </div>
 
-                {!edit ? <div className="article-detail">{details.description}</div> : 
-                    <input
-                        type = "text"
-                        value = {par}
-                        onChange = {(e) => setPar(e.target.value)}
-                        placeholder = "description"
-                    ></input>}
+                {!edit ? <div className="description">{details.description}</div> : 
+                    <div className = "description-input">
+                        <label>Description: </label>
+                        <input
+                            type = "text"
+                            value = {par}
+                            onChange = {(e) => setPar(e.target.value)}
+                            placeholder = "description"
+                        ></input>
+                    </div>
+                    }
             </div>
-            {(!edit && details) && (details.tags.includes('resolved')? <div className = "commentSection">Comment Section is Locked</div> :
+            {!edit && details && (details.tags.includes('resolved')? <div className = "commentPrompt">
+                [Issue Resolved] Comment Section Is Now Locked<FontAwesomeIcon icon={faLock}/>
+            </div> :
             <div className="commentSection">
                 <form onSubmit={handleSubmit}>
-                    <div className="commentPrompt">Comment Something</div>
+                    <div className="commentTitle">Comment Something</div>
                     <div className="inputButtonContainer">
                         <input 
                             className="commentInput"
@@ -179,7 +192,8 @@ const IssueFocus = () => {
             <div className="commentsContainer">
                 {CurrComments.map((cover) => (
                     <div className="singleComment" key={cover._id}>
-                        <p className="commentAuthor">{cover.author_name}: <span className="commentText">{cover.comment}</span></p>
+                        <p className="commentText">{cover.comment}</p>
+                        <div className= "commentAuthor">{cover.author_name}</div>
                     </div>
                 ))} 
             </div>
