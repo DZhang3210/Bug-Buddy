@@ -1,5 +1,5 @@
-require('dotenv').config()
-
+const path = require('path');
+const dotenv = require('dotenv');
 const punycode = require('punycode/');
 const express = require('express')
 const mongoose = require('mongoose')
@@ -26,6 +26,10 @@ app.use('/api/issue',issueRoutes)
 
 app.use('/api/user', signupRoutes)
 
+const envPath = path.resolve(__dirname, '../.env');
+
+// Configure dotenv
+dotenv.config({ path: envPath });
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)
