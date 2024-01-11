@@ -119,7 +119,7 @@ const IssueDetails = ({issue, filter, keyword}) => {
             </div>
             {warning !== null && <div className = "cover">
                 <div className ="cover-warning">
-                    <div>Are you sure? These changes will be permanent</div>
+                    <div>{warning === "delete" ? "Are you sure? These changes will be permanent" : "Are you sure? Resolving Will Close all Comments and Editing"}</div>
                     <div>
                         {warning === "delete" && <button onClick={handleClick} className = "warning-button">Delete</button>}
                         {warning === "resolve" && <button onClick={resolveIssue} className = "resolve-button">Resolve</button>}

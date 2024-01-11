@@ -33,8 +33,21 @@ header a {
 }
 
 .create{
+  font-family: 'Roboto', sans-serif;
   padding-top:120px
 }
+
+.create button{
+  background-color:rgb(164, 164, 199);
+  transition: background-color 0.3s;
+  transition: transform 0.3s;
+  margin-top:20px;
+}
+.create button:hover{
+  background-color:rgb(106, 106, 188);
+  transform:scale(1.05);
+}
+
 
 /* homepage */
 .home {
