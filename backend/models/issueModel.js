@@ -28,6 +28,8 @@ const issueSchema = new Schema ({
     },teamID:{
         type:String,
         required:true
+    },watchViews:{
+        type:Array,
     }
 },{timestamps: true})
 

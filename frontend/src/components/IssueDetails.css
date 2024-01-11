@@ -23,11 +23,6 @@
     margin-bottom:0
 }
 
-.workout-details p {
-    color: #586069; /* Subdued text color */
-    margin: 8px 0; /* Margin for paragraphs */
-    font-size: 14px; /* Font size for paragraphs */
-}
 
 .workout-details div {
     padding: 2px 6px; /* Padding inside tags */
@@ -70,3 +65,82 @@
     background-color: #e6f3ff; /* Light blue background on hover */
     color: #0366d6; /* Darker blue text color on hover */
 }
+
+.workout-wrapper {
+    position: relative; /* Parent must be relative for absolute positioning of children */
+    /* Other styles for workout-wrapper... */
+}
+
+.cover {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    position: absolute; /* Position the cover absolutely within its parent */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+}
+
+.cover-warning {
+
+    text-align: center;
+    background-color: #fffbea; /* Light yellow background */
+    color: #856404; /* Subdued warning text color */
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ffeeba;
+    /* Add any additional styling as needed */
+}
+
+.warning-button {
+    background-color: #d9534f; /* Red color for warning */
+    color: white; /* White text for contrast */
+    border: none; /* No border for a cleaner look */
+    padding: 5px 10px; /* Padding for size */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Cursor change to indicate button */
+    font-size: 1em; /* Font size */
+    transition: background-color 0.2s; /* Transition for interactive effect */
+}
+
+.warning-button:hover {
+    background-color: #c9302c; /* Darker shade on hover */
+}
+
+.resolve-button {
+    background-color: #5cb85c; /* Red color for warning */
+    color: rgb(255, 255, 255); /* White text for contrast */
+    border: none; /* No border for a cleaner look */
+    padding: 5px 10px; /* Padding for size */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Cursor change to indicate button */
+    font-size: 1em; /* Font size */
+    border: 1px solid #ccc; /* Subtle border */
+    transition: background-color 0.2s; /* Transition for interactive effect */
+}
+
+.resolve-button:hover {
+    background-color: #4cae4c; /* Darker shade on hover */
+}
+
+
+.cancel-button {
+    margin-left:10px;
+    background-color: #f0f0f0; /* Light grey for cancel */
+    color: #333; /* Darker text for readability */
+    border: 1px solid #ccc; /* Subtle border */
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
+}
+
+
+

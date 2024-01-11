@@ -1,158 +1,113 @@
-.focus {
-    max-width: 700px;
-    margin: 10px auto;
-    padding: 0px 10px;
+.focus-wrapper {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
     padding-top:120px;
-    padding-bottom:50px;
-    color: #333; /* Dark color for text */
-    background-color:rgb(224, 224, 224);
-    border-radius: 5px;
+}
+
+.focus {
+    padding: 20px;
 }
 
 .top-section {
-    margin-bottom: 10px;
+    border-bottom: 1px solid #e1e4e8;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .article-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.5em;
+    color: #2c3e50;
+    margin-bottom: 10px;
 }
 
-.edit, .tag {
-    display: inline-block;
-    margin-left: 10px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: #333;
-    cursor: pointer;
-    font-size: 0.6em;
-}
-
-.edit:hover, .tag:hover {
-    background-color: #e0e0e0;
-}
-
-.edit-input-container {
-    display: flex; /* Enables Flexbox */
-    align-items: center; /* Aligns items vertically in the center */ 
-}
-
-.edit {
-    /* Styles for your edit/submit button */
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.7em;
+.article-extra {
+    font-size: 0.9em;
+    color: #6a737c;
 }
 
 .article-detail {
-    color: #586069; /* Subdued color */
-    font-size: 0.7em;
-}
-.article-extra{
-    font-size:0.85em
+    margin-right: 10px;
 }
 
-input[type="text"] {
-    border: 1px solid #e1e4e8; /* Subtle border color */
-    border-radius: 4px; /* Slight rounding for a softer look */
-    padding: 8px 12px; /* Comfortable padding */
-    width: 100%; /* Full width to fit container */
-    box-sizing: border-box; /* Include padding and border in the width */
-    font-size: 1em; /* Standard font size */
-    color: #333; /* Dark color for text */
-    background-color: #f6f8fa; /* Light background color */
-}
-
-/* Hover and focus styles for input fields */
-input[type="text"]:hover, input[type="text"]:focus {
-    border-color: #0366d6; /* Slightly highlighted border on hover/focus */
-    outline: none; /* Remove default focus outline */
-}
-
-
-.commentSection {
-    max-width: 700px;
-    margin: 20px auto;
-    font-size:0.9em;
-    padding: 10px;
-}
-
-.commentPrompt {
-    color: #586069; /* Subtle color */
-    font-size: 1em;
-    margin-bottom: 10px; /* Spacing before the input field */
-}
-
-.inputButtonContainer {
-    display: flex;
-}
-
-.commentInput {
-    border: 1px solid #ddd;
+.tag {
+    display: inline-block;
+    background-color: #ffeb3b;
+    color: black;
+    padding: 2px 8px;
     border-radius: 4px;
-    padding: 8px 10px;
-    flex-grow: 1; /* Allows input to take up available space */
     font-size: 0.9em;
+}
+
+.commentSection, .commentsContainer {
+    border-top: 1px solid #e1e4e8;
+    padding-top: 15px;
+}
+
+.commentInput, .commentButton {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px;
 }
 
 .commentButton {
-    background-color: #fafafa; /* Light background for button */
-    color: #24292e; /* Standard text color */
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: #f48024; /* Stack Overflow's button color */
+    color: white;
+    border: none;
     cursor: pointer;
-    font-size: 0.8em; /* Smaller font size */
-    transition: background-color 0.2s ease-in-out;
 }
 
 .commentButton:hover {
-    background-color: #e6e6e6; /* Slightly darker on hover */
-}
-
-
-.error {
-    color: #d73a49; /* Error color */
-    margin-top: 10px;
-    font-size: 0.9em;
-}
-
-/* Style for the locked comment section */
-.commentSection.locked {
-    text-align: center;
-    color: #586069;
-    font-size: 1em;
-    padding: 15px;
-}
-
-
-.commentsContainer {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 10px;
+    background-color: #dc6a17;
 }
 
 .singleComment {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 4px; /* Slight rounding for a softer look */
-    border-left: 4px solid #e1e4e8; /* Subtle left border for a touch of style */
+    border-top: 1px solid #e1e4e8;
+    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .commentAuthor {
-    font-size: 0.85em;
-    color: #586069; /* A softer color for the author's name */
-    font-weight: 500;
-    margin-bottom: 4px;
+    color: #0077cc;
+    font-weight: bold;
 }
 
 .commentText {
-    color: #24292e;
-    line-height: 1.4;
-    font-size: 0.95em;
+    color: #242729;
 }
 
-/* Minimalist design often omits hover effects for a cleaner look */
+/* New styles for emphasizing onClick components */
+.edit, .commentButton, .showcase, .git {
+    cursor: pointer; 
+    transition: all 0.2s ease-in-out; 
+}
+
+.edit:hover, .commentButton:hover, .showcase:hover, .git:hover {
+    color: #1158c7; 
+    font-weight: bold; 
+    background-color: #f3f3f3; 
+    transform: scale(1.05); 
+}
+
+.commentButton {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.commentButton:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.faEye {
+    transition: transform 0.2s ease; 
+}
+
+.active .faEye:hover, .edit .faEye:hover {
+    transform: scale(1.1); 
+    color: #f48024;
+}
+

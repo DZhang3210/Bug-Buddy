@@ -7,7 +7,8 @@ const userSchema = new Schema({
     firstName:{
         type:String, 
         required: true
-    },lastName:{
+    },
+    lastName:{
         type:String, 
         required: true
     },
@@ -23,9 +24,10 @@ const userSchema = new Schema({
     teamID: {
         type: String, 
         required: true
-    }, liked:{
+    }, 
+    watching:{
         type:Array, 
-        required: true
+        default: []
     }
 })
 //static signup method

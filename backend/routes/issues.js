@@ -1,5 +1,5 @@
 const express = require('express')
-const {createIssue, getIssues, getIssue, deleteIssue, updateIssue} = require('../controllers/issueController')
+const {createIssue, getIssues, getEIssues, getIssue, deleteIssue, updateIssue} = require('../controllers/issueController')
 const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
@@ -8,7 +8,10 @@ const router = express.Router()
 
 router.use(requireAuth)
 
-router.get('/general/:teamID', getIssues)
+
+router.get('/general/:teamID/:filter/:uid/', getEIssues) 
+
+router.get('/general/:teamID/:filter/:uid/:keyword', getIssues) 
 
 router.get('/:id', getIssue)
 

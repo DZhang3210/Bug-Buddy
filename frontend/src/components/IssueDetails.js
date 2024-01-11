@@ -6,14 +6,18 @@ import './IssueDetails.css'
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faCheck} from '@fortawesome/free-solid-svg-icons'
 
-const IssueDetails = ({issue}) => {
+
+const IssueDetails = ({issue, filter, keyword}) => {
     const [details, setDetails] = useState('')
     const [render, setRender] = useState(false);
+    const [warning, setWarning] = useState(null)
     const {dispatch} = useIssuesContext()
     const {user} = useAuthContext()
     const navigate = useNavigate()
-
+    
     useEffect(() => {
         const fetchIssues = async () => {
         const response = await fetch('/api/issue/'+issue._id,{
@@ -31,7 +35,7 @@ const IssueDetails = ({issue}) => {
 
 
     const OnResolve = async () => {
-        const response = await fetch('/api/issue/general/'+user.teamID,{
+        const response = await fetch('/api/issue/general/'+user.teamID+"/"+filter + '/'+user.id+"/"+keyword,{
             headers: {
                 'Authorization': `Bear ${user.token}`
             }})
@@ -51,6 +55,7 @@ const IssueDetails = ({issue}) => {
         const json = await response.json()
         if (response.ok){
             dispatch({type:'DELETE_ISSUE', payload: json})
+            setWarning(null)
         }
     }
     const resolveIssue = async() =>{
@@ -68,6 +73,7 @@ const IssueDetails = ({issue}) => {
         if (response.ok){
             setRender((render) => !render)
             OnResolve()
+            setWarning(null)
         }
     }
 
@@ -78,18 +84,17 @@ const IssueDetails = ({issue}) => {
         navigate('/focus')
     }}
 
-    
-    const issueStyle = issue.tags.includes('resolved') ? { backgroundColor: '#d5deeb'} : {backgroundColor: 'white'}
+    let issueStyle = {}
+    if(details)issueStyle = details.tags.includes('resolved') ? { backgroundColor: '#d1d1d1'} : {backgroundColor: 'white'}
     return ( 
         details && <div className="workout-wrapper" style={issueStyle}>
         <div className="workout-details" onClick={onClick(issue._id)}>
             <div>
-                <h4>{details.title}</h4>
-                {details.tags.map((tag, index) => (
-                    <div key={index}>
-                        {tag}
-                    </div>
-                ))}
+                <h4>{details.title} 
+                    {issue.watchViews.includes(user.id) && <FontAwesomeIcon icon={faEye}/>}
+                    {details.tags && details.tags.includes('resolved') && <FontAwesomeIcon icon={faCheck}/>}
+                </h4>
+                
             </div>
             <div className = "issueDetails">
                 <span>
@@ -100,15 +105,25 @@ const IssueDetails = ({issue}) => {
             <div className="buttons">
                 {details.author_id === user.id &&
                     <>
-                        <div className="deleteSection" onClick={handleClick}>
+                        <div className="deleteSection" onClick = {()=>setWarning('delete')}>
                             <div className="material-symbols-outlined">Delete</div>
                         </div>
-                        <div className="resolveSection" onClick={resolveIssue}>
+                        <div className="resolveSection" onClick={()=> setWarning('resolve')}>
                             <div className="material-symbols-outlined">Block</div>
                         </div>
                     </>
                 }
             </div>
+            {warning !== null && <div className = "cover">
+                <div className ="cover-warning">
+                    <div>Are you sure? These changes will be permanent</div>
+                    <div>
+                        {warning === "delete" && <button onClick={handleClick} className = "warning-button">Delete</button>}
+                        {warning === "resolve" && <button onClick={resolveIssue} className = "resolve-button">Resolve</button>}
+                        <button className = "cancel-button" onClick = {()=>setWarning(null)}>Cancel</button>
+                    </div>
+                </div>
+            </div>}
         </div>
     
      );

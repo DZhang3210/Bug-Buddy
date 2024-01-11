@@ -3,12 +3,16 @@ import {useEffect, useState} from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useIssuesContext } from '../hooks/useIssuesContext'
 import './IssueFocus.css'
+
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 const IssueFocus = () => {
     const [details, setDetails] = useState('')
     const [comment, setComment] = useState('')
     const [CurrComments, setCurComments] = useState([])
+    const [watching, setWatching] = useState(null)
     const [render, setRender] = useState(false)
     const [error, setError] = useState(null)
     const [edit, setEdit] = useState(false)
@@ -26,11 +30,12 @@ const IssueFocus = () => {
         })
         const json = await response.json()
         if (response.ok) {
-            await setDetails(json)
+            setDetails(json)
             setTitle(json.title)
             setPar(json.description)
-            console.log('USER', user, 'DETAILS',details)
-            console.log('OK', title, par)
+            setWatching(json.watchViews.length)
+            if(details !== null)
+                console.log('USER', user, 'DETAILS',details)
         }}
         const fetchComments = async () => {
             const response = await fetch('/api/comment/'+currentIssue,{
@@ -84,7 +89,7 @@ const IssueFocus = () => {
 
         const response = await fetch('/api/issue/' + currentIssue,{
             method: 'PATCH', 
-            body: JSON.stringify({title, description:par}),
+            body: JSON.stringify({action:"edit",title, description:par}),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bear ${user.token}`
@@ -100,15 +105,33 @@ const IssueFocus = () => {
         }
         setEdit(!edit)
     }
+    const changeViews = async () =>{
+        if(!user){return}
+        const response1 = await fetch('/api/issue/' + currentIssue,{
+            method: 'PATCH', 
+            body: JSON.stringify({action:"views", user:user.id}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bear ${user.token}`
+            }
+        })
+        const json = await response1.json()
+        if (response1.ok){
+            setRender((render) => !render)
+            console.log("NEW SUBMIT",json)
+        }
+    }
 
-    //console.log('CONSOLE',details)
-    //const issueStyle = (details.tags.includes('resolved') ? { backgroundColor: '#d5deeb'} : {backgroundColor: 'white'})
 
     return (  
         <div className="focus-wrapper">
             <div className="focus">
                 <div className="top-section">
                     {!edit && <span className="article-title">{details.title}</span>}
+                    {!edit && 
+                        <span className = {details && details.watchViews.includes(user.id) ?"active":"edit"} onClick = {()=>changeViews()}>
+                            <FontAwesomeIcon icon={faEye}Watching/> Watch ({watching})
+                        </span>}
                     {edit && (
                         <div className="edit-input-container">
                             <input

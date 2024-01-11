@@ -3,23 +3,165 @@ const Issue = require('../models/issueModel')
 
 const getIssues = async(req, res) => {
     const teamID = req.params.teamID
-    //const user_id = req.params.id;
-    
-    const issues = await Issue.find({teamID}).sort({createdAt: -1})
-    issues.sort((a, b) => {
-        const aIsResolved = a.tags.includes("resolved");
-        const bIsResolved = b.tags.includes("resolved");
-    
-        if (aIsResolved && !bIsResolved) {
-            return 1; // a goes to the bottom
-        } else if (!aIsResolved && bIsResolved) {
-            return -1; // b goes to the bottom
-        } else {
-            // If both are resolved or both are non-resolved, sort by createdAt
-            return new Date(b.createdAt) - new Date(a.createdAt);
-        }
-    });
-    
+    const filter = req.params.filter
+    const keyword = req.params.keyword
+    const id = req.params.uid;
+    let issues = {}
+    switch(filter){
+        case "All":
+            issues = await Issue.find({teamID}).sort({createdAt: -1})
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+                const aIsResolved = a.tags.includes("resolved");
+                const bIsResolved = b.tags.includes("resolved");
+            
+                // Prioritize watched issues
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // a goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // b goes to the top
+                } else {
+                    // For issues with the same watching status, check resolved status
+                    if (aIsResolved && !bIsResolved) {
+                        return 1; // a goes to the bottom
+                    } else if (!aIsResolved && bIsResolved) {
+                        return -1; // b goes to the bottom
+                    } else {
+                        // If both have the same resolved status, sort by createdAt
+                        return new Date(a.createdAt) - new Date(b.createdAt); // Note: Changed to sort from oldest to newest
+                    }
+                }
+            });
+            if (keyword) issues = issues.filter(issue => issue.title.includes(keyword));
+            break;
+        case "Watching":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => issue.watchViews.includes(id));
+            issues.sort((a, b) =>  new Date(b.createdAt) - new Date(a.createdAt));
+            if (keyword) issues = issues.filter(issue => issue.title.includes(keyword));
+            break;
+        case "Current":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => !issue.tags.includes('resolved'));
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // Issue 'a' goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // Issue 'b' goes to the top
+                } else {
+                    // If both or neither are being watched, sort by createdAt from newest to oldest
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+            if (keyword) issues = issues.filter(issue => issue.title.includes(keyword));
+            break;
+        case "Resolved":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => issue.tags.includes('resolved'));
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // Issue 'a' goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // Issue 'b' goes to the top
+                } else {
+                    // If both or neither are being watched, sort by createdAt from newest to oldest
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+            if (keyword) issues = issues.filter(issue => issue.title.includes(keyword));
+            break;
+        default:
+            return res.status(404).json({error: "No filter defined"})
+
+    }
+
+    res.status(200).json(issues)
+}
+
+const getEIssues = async(req, res) => {
+    const teamID = req.params.teamID
+    const filter = req.params.filter
+
+    const id = req.params.uid;
+    let issues = {}
+    switch(filter){
+        case "All":
+            issues = await Issue.find({teamID}).sort({createdAt: -1})
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+                const aIsResolved = a.tags.includes("resolved");
+                const bIsResolved = b.tags.includes("resolved");
+            
+                // Prioritize watched issues
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // a goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // b goes to the top
+                } else {
+                    // For issues with the same watching status, check resolved status
+                    if (aIsResolved && !bIsResolved) {
+                        return 1; // a goes to the bottom
+                    } else if (!aIsResolved && bIsResolved) {
+                        return -1; // b goes to the bottom
+                    } else {
+                        // If both have the same resolved status, sort by createdAt
+                        return new Date(a.createdAt) - new Date(b.createdAt); // Note: Changed to sort from oldest to newest
+                    }
+                }
+            });
+            break;
+        case "Watching":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => issue.watchViews.includes(id));
+            issues.sort((a, b) =>  new Date(b.createdAt) - new Date(a.createdAt));
+            break;
+        case "Current":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => !issue.tags.includes('resolved'));
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // Issue 'a' goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // Issue 'b' goes to the top
+                } else {
+                    // If both or neither are being watched, sort by createdAt from newest to oldest
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+            break;
+        case "Resolved":
+            issues = await Issue.find({teamID})
+            issues = issues.filter(issue => issue.tags.includes('resolved'));
+            issues.sort((a, b) => {
+                const aIsWatching = a.watchViews.includes(id);
+                const bIsWatching = b.watchViews.includes(id);
+
+                if (aIsWatching && !bIsWatching) {
+                    return -1; // Issue 'a' goes to the top
+                } else if (!aIsWatching && bIsWatching) {
+                    return 1; // Issue 'b' goes to the top
+                } else {
+                    // If both or neither are being watched, sort by createdAt from newest to oldest
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+            break;
+        default:
+            return res.status(404).json({error: "No filter defined"})
+
+    }
+
     res.status(200).json(issues)
 }
 
@@ -78,7 +220,7 @@ const deleteIssue = async (req, res) => {
 
 const updateIssue = async(req, res) => {
     const{ id } = req.params
-    const {action, title, description} = req.body
+    const {action, title, description, user} = req.body
     const currState = await Issue.findOne({_id: id}).select('tags')
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: "No such Issue"})
@@ -106,7 +248,7 @@ const updateIssue = async(req, res) => {
                 }
                 res.status(200).json(updatedIssue);
             }
-        }else{
+        }else if(action ==="edit"){
             const updatedIssue = await Issue.findOneAndUpdate(
                 {_id: id}, {title, description}, {new:true}
             );
@@ -114,8 +256,29 @@ const updateIssue = async(req, res) => {
                 return res.status(404).json({ error: "Issue not found" });
             }
             res.status(200).json(updatedIssue);
+        }else if(action === "views"){
+            function removeItemOnce(arr, value) {
+                var index = arr.indexOf(value);
+                if (index > -1) {
+                  arr.splice(index, 1);
+                }
+                return arr;
+              }
+            const list = await Issue.findOne({_id:id}).select('watchViews')
+            const watchViews = list ? list.watchViews : null;
+            if(!watchViews.includes(user)){
+                watchViews.push(user)
+            }else{
+                removeItemOnce(watchViews, user)
+            }
+            const updatedIssue = await Issue.findOneAndUpdate(
+                {_id: id}, {watchViews}, {new:true}
+            );
+            if (!updatedIssue) {
+                return res.status(404).json({ error: "Issue not found" });
+            }
+            res.status(200).json(updatedIssue);
         }
-        // Handle other actions here if necessary
     } catch (error) {
         // Handle any other errors that might occur during the update
         res.status(500).json({ error: error.message });
@@ -127,5 +290,6 @@ module.exports= {
     getIssues, 
     getIssue, 
     deleteIssue, 
-    updateIssue
+    updateIssue, 
+    getEIssues
 }
