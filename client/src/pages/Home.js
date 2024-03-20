@@ -3,7 +3,8 @@ import IssueDetails from '../components/IssueDetails'
 import {useIssuesContext} from '../hooks/useIssuesContext'
 import { useAuthContext } from '../hooks/useAuthContext' 
 import { FaStar, FaList, FaCheck } from 'react-icons/fa';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
     const [filter, setFilter] = useState('All')
@@ -57,9 +58,17 @@ const Home = () => {
                     {showTeamID && <div className="teamID">Team ID: {user.teamID}</div>}
                 </div>
             </div>
-            {/* <div>
-                <FaList className="fa-list" /> Current Issues
-            </div>  */}
+            {!issues && 
+                    (
+                    <div>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                        <div>
+                            Server may take some extra time to start up which is why 
+                            you're seeing this
+                        </div>
+                    </div>
+                    )
+                }
             <div className="home">
                 <div className="workouts">
                     {issues && issues.map(
