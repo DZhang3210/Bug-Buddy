@@ -38,6 +38,7 @@ const Login = () => {
             <div className = "instructions">
                 <div>Test Email: dummy@gmail.com</div>
                 <div>Test Password: Password1!</div>
+                <div><b>** If It's Not Immediately Logging you in, the Server is Likely just Starting Up **</b></div>
             </div>
         </form>
     );
